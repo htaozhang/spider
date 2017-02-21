@@ -6,34 +6,32 @@ from geven.pool import Pool
 
 class Worker(threading.Thread):
     def __init__(self, name, coroutine_num, func, workload):
-        self.name = name
-        self.coroutine_num = coroutine_num
-        self.__pool = Pool(greent_num)
+        self.__name = name
+        self.__coroutine_num = coroutine_num
+        self.__pool = Pool(coroutine_num)
         self.__func = func
-        self.workload = workload
-        threading.Thread.__init__(self, None, None, self.name, (), {})
-
+        self.__workload = workload
+        threading.Thread.__init__(self, None, None, self.__name, (), {})
         pass
     
-    def entry():
-        with gevent.Timeout(self.workload.timeout):
+    def entry(self):
+        with gevent.Timeout(self.__workload.timeout):
             self.__func(task)
-
         pass
 
     def run(self):
         while (self.__busy):
-            task = self.workload.get_workload()
+            task = self.__workload.assign()
             self.__pool.spawn(self.entry, task)
             pass
 
         self.__busy = False
         pass
 
-    def is_busy():
+    def is_busy(self):
         return self.__busy
 
-    def stop():
+    def stop(self):
         self._busy = False
         time.sleep(0.5)
 
