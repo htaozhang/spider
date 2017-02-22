@@ -19,7 +19,7 @@ class Worker(threading.Thread):
         logging.debug("[Worker::__init__][ok]")
         pass
     
-    def entry(self):
+    def entry(self, task):
         with gevent.Timeout(self.__workload.timeout):
             self.__func(task)
             pass
@@ -51,6 +51,7 @@ class Worker(threading.Thread):
         time.sleep(0.5)
         logging.debug("[Worker::stop][ok]")
 
+    
 
 if __name__ == "__main__":
     logging.basicConfig(level = logging.DEBUG)
@@ -65,7 +66,6 @@ if __name__ == "__main__":
 
     worker = Worker("test_worker", 2, work, workload)
     worker.start()
-
     time.sleep(5)
     worker.stop()
 

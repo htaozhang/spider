@@ -5,7 +5,7 @@ from gevent.queue import Queue, Empty
 
 class Workload:
     def __init__(self):
-        self.timeout = 2000
+        self.timeout = 1
         self.__max_qsize = 1000
         self.__tasks = Queue(maxsize = self.__max_qsize)
         self.__status = []
