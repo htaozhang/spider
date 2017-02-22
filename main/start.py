@@ -1,10 +1,13 @@
 #coding: utf-8
 
+from workers import Workers
+from slave import Slave
+from workload import Workload
 
 def work(task):
     # working
 
-    workload.complete(task)
+    workload.complete_one(task)
 
     return
 

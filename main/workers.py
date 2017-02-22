@@ -21,6 +21,11 @@ class Workers:
         pass
     
     def start():
+        # 生产任务线程启动
+        producter = Threading.Thread(target = self.run, args = ())
+        producter.start()
+
+        # 消费任务线程组启动
         for worker in self.__workers:
             worker.start()
             pass
@@ -31,10 +36,10 @@ class Workers:
             worker.stop()
             pass
 
-
     def add_worker():
         self.__index += 1
-        worker = Worker(self, "work_thread_" + str(self.__index), self.__coroutine_num, self.__func, self.__workload)
+        thread_name = "workload_thread_" + str(self.__index)
+        worker = Worker(self, thread_name, self.__coroutine_num, self.__func, self.__workload)
         self.__workers.append(worker)
         return worker
 
