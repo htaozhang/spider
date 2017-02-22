@@ -22,6 +22,8 @@ class Worker(threading.Thread):
     def entry(self):
         with gevent.Timeout(self.__workload.timeout):
             self.__func(task)
+            pass
+        logging.debug("[Worker::entry][ok]")
         pass
 
     def run(self):
