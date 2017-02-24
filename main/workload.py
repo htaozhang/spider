@@ -1,11 +1,12 @@
 #coding: utf-8
 
+import time
 import logging
 from gevent.queue import Queue, Empty
 
 class Workload:
     def __init__(self):
-        self.timeout = 0.1
+        self.timeout = 3
         self.__max_qsize = 1000
         self.__tasks = Queue(maxsize = self.__max_qsize)
         self.__status = []
@@ -45,6 +46,7 @@ class Workload:
     def complete_one(self, task):
         status = {}
         self.__status.append(status)
+        time.sleep(2)
         logging.debug("[Workload::complete_one][%s]" % task)
         return True
 
