@@ -11,15 +11,16 @@ class Worker(threading.Thread):
     def __init__(self, name, coroutine_num, func, workload):
         self.__name = name
         self.__coroutine_num = coroutine_num
-        self.__pool = Pool(coroutine_num)
         self.__func = func
         self.__workload = workload
+        self.__pool = Pool(coroutine_num + 1)
         self.__busy = False
         threading.Thread.__init__(self, None, None, self.__name, (), {})
         logging.debug("[Worker::__init__][ok]")
         pass
     
     def entry(self, task):
+        print 'hello'
         with gevent.Timeout(self.__workload.timeout):
             self.__func(task)
             pass
@@ -64,9 +65,10 @@ if __name__ == "__main__":
         workload.complete_one(task)
         return True
 
-    worker = Worker("test_worker", 2, work, workload)
+    worker = Worker("test_worker", 5, work, workload)
     worker.start()
-    time.sleep(5)
+
+    time.sleep(10)
     worker.stop()
 
 
